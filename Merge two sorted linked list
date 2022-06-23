@@ -1,0 +1,41 @@
+ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if(list1==NULL){
+            return list2 ;
+        }
+        if(list2==NULL){
+            return list1 ;
+        }
+        
+        ListNode *store  = list1 ;
+        
+        if(list1->val < list2-> val){
+            list1 = list1->next ;
+        }
+        else{
+            store = list2 ;
+            list2 = list2-> next ;
+        }
+        
+        ListNode* pointer = store ;
+        
+        while(list1 && list2){
+            if(list1->val < list2-> val){
+                pointer->next = list1 ;
+                list1 = list1->next ;
+            }
+            else{
+                pointer->next = list2 ;
+                list2 = list2-> next ;
+            }
+            pointer = pointer -> next ;
+        }
+        
+        if(list1==NULL){
+            pointer -> next = list2 ;
+        }
+        else{
+            pointer-> next = list1 ;
+        }
+        
+        return store ;
+    }
