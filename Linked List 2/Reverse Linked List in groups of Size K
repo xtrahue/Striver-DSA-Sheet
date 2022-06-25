@@ -1,0 +1,76 @@
+Node *getListAfterReverseOperation(Node *head, int n, int b[]){ //coding ninja wala.
+	// Write your code here.
+    Node *counter = head;
+    Node *ptr1 = head;
+    Node *ptr2 = head;
+
+    int count = 0;
+
+    while (counter != NULL)
+    {
+        count++;
+        counter = counter->next;
+    }
+    int copy_count = count;
+
+    for (int i = 0; (i < n )&& (count > 0 )&& (ptr1!=NULL); i++)
+    {
+        int k ;
+        
+        if(count>=b[i]){
+            k=b[i] ;
+        }
+        else{
+            k= count ;
+        }
+
+        int arr[k];
+
+        for (int i = k - 1; i >= 0; i--)
+        {
+            arr[i] = ptr1->data;
+            ptr1 = ptr1->next;
+        }
+        for (int i = 0; i < k; i++)
+        {
+            ptr2->data = arr[i];
+            ptr2 = ptr2->next;
+        }
+
+
+        count -= k;
+    }
+    return head ;
+}
+
+/*ListNode *counter = head ;    //leetcode wala
+        ListNode *ptr1 = head ;
+        ListNode *ptr2 = head ;
+        
+        int count = 0 ;
+        
+        while(counter !=NULL){
+            count++ ;
+            counter = counter -> next ;
+        }
+        
+        while(count>=k){
+            int p = k ;
+            int arr[k] ;
+            
+            for(int i=k-1 ; i>=0;i--){
+                arr[i] = ptr1->val ;
+                ptr1 = ptr1-> next ;
+            }
+            for(int i=0;i<k;i++){
+                ptr2-> val = arr[i] ;
+                ptr2 = ptr2->next ;
+            }
+            
+           /* ptr1= ptr1->next ;
+            ptr2= ptr2->next ;*/
+            
+            count-=k ;
+        }
+        return head ;
+        */
