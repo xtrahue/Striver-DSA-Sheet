@@ -1,4 +1,4 @@
-//two pinter
+//two pinter...imp --->fast!=NULL && fast->next!=NULL...have to check both to encounter NULL...fast and fast->next
 bool detectCycle(Node *head)
 {
 	//	Write your code here
