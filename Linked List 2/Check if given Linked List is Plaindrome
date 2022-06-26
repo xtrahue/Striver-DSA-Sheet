@@ -1,0 +1,30 @@
+bool isPalindrome(LinkedListNode<int> *head) {
+    // Write your code here.
+
+        LinkedListNode<int> *slow = head ;
+        LinkedListNode<int> *fast = head ;
+
+        while(fast != NULL && fast->next!=NULL){
+            slow = slow ->next ;
+            fast = fast->next->next ;
+        }
+
+        LinkedListNode<int> *prev = NULL ;
+        LinkedListNode<int> *por = slow ;
+
+        while(slow!=NULL){
+            por = slow ->next ;
+            slow ->next = prev ;
+            prev = slow ;
+            slow = por ;
+        }
+
+        while(prev != NULL && head !=NULL){
+            if(prev->data!=head ->data){
+                return false ;
+            }
+            prev = prev->next ;
+            head = head -> next ;
+        }
+        return true ;
+}
