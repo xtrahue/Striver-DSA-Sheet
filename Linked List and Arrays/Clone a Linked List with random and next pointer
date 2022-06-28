@@ -1,0 +1,44 @@
+LinkedListNode<int> *cloneRandomList(LinkedListNode<int> *head)
+{
+    // Write your code here.
+    if(head==NULL){
+        return NULL ;
+    }
+    LinkedListNode<int> *ptr1= head ; // to traverse through the whole list
+    while(ptr1){
+        LinkedListNode<int> *temp = new LinkedListNode<int>(ptr1->data) ; //to create the duplicate LinkedListNode<int>s and to connect them
+        temp->next = ptr1->next ;
+        ptr1->next = temp ;
+        ptr1=ptr1->next->next ;//1->1'->2..that's why next->next to access the 2nd LinkedListNode<int>
+    }
+
+    LinkedListNode<int> *ptr2 = head ;// to show where we have to point for random pointer
+
+    while(ptr2){
+        if(ptr2->random!=NULL){
+            ptr2->next->random = ptr2->random->next ;
+        }
+        else{
+            ptr2->next->random=NULL ;
+        }
+
+        ptr2=ptr2->next->next ;
+    }
+
+    LinkedListNode<int> *dummy = new LinkedListNode<int>(-1) ;
+    dummy->next=head->next ;
+
+    LinkedListNode<int> *d1 = head ;
+    LinkedListNode<int> *d2=head->next ;
+
+    while((d1->next!=NULL )&& (d2->next!=NULL)){
+        d1->next=d2->next ;
+        d1=d1->next ;
+        d2->next = d2->next->next ;
+        d2=d2->next ;
+    }
+    d1->next = NULL ;
+    d2->next = NULL ;
+
+    return dummy->next ;
+}
