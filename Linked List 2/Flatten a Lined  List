@@ -1,0 +1,40 @@
+Node *mergeSort(Node *a, Node *b ){
+    Node *temp = new Node(-1) ;
+    Node *res = temp ;
+    
+    while(a!=NULL && b!=NULL){
+        
+        if(a->data < b->data){
+            temp->child = a ;
+            temp =temp->child ;
+            a=a->child ;
+            temp->next = NULL ;
+        }
+        else{
+            temp->child = b ;
+            temp = temp->child ;
+            b=b->child ;
+            temp->next = NULL ;
+        }
+    }
+    if(a==NULL){
+        temp->child = b;
+    }
+    else{
+        temp->child = a ;
+    }
+    
+    return res->child ;
+}
+
+Node* flattenLinkedList(Node* root) 
+{
+	
+    if (root == NULL || root->next == NULL) 
+            return root; 
+
+    root->next = flatten(root->next); 
+    root = mergeTwoLists(root, root->next); 
+ 
+    return root;
+}
