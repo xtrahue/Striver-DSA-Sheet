@@ -1,0 +1,16 @@
+int removeDuplicates(vector<int> &nums, int n) {
+	// Write your code here.
+    int slow = 0, fast = 1,count=1 ;
+    while(fast<n){
+        if(nums[slow]==nums[fast]){
+            fast++ ;
+        }
+        else{
+            slow++ ;
+            nums[slow] = nums[fast] ;
+            fast++ ;
+            count++ ;
+        }
+    }
+    return count ;
+}
