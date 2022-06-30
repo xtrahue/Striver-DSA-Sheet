@@ -1,0 +1,40 @@
+#include <bits/stdc++.h> 
+long largest(long *arr, int n)
+{
+    long i;
+    long maxi = 0;
+
+    for (i = 1; i < n; i++)
+        if (arr[i] > arr[maxi])
+            maxi = i;
+ 
+    return maxi;
+}
+long getTrappedWater(long *arr, int n){
+    // Write your code here.
+    long water = 0 ;
+    long maxE =largest(arr,n) ;
+    long left = 0 ;
+    long right=maxE ;
+
+    for(long i=0;i<=maxE;i++){       
+        if(arr[i]>arr[left]){
+            left = i;
+        }
+        else{
+            water+=(arr[left]-arr[i]);
+        }
+
+    }
+    left=n-1 ;
+    for(long i=n-1;i>maxE;i--){
+        if(arr[i]>arr[left]){
+            left = i;
+        }
+        else{
+            water+=(arr[left]-arr[i]);
+        }
+    }
+
+    return water ;
+}
