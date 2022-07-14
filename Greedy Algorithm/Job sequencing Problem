@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+
+struct format{    
+   int id ;
+   int dead;
+   int profit;
+};
+
+bool static comparator(struct format f1,format f2)
+{
+   return f1.profit>f2.profit;
+}
+
+int jobScheduling(vector<vector<int>> &jobs)
+{
+   int n = jobs.size();
+
+   struct format arr[n];
+
+   for(int i=0;i<n;i++)
+
+   {
+       arr[i].id = i ;
+       arr[i].dead = jobs[i][0];
+
+       arr[i].profit = jobs[i][1];
+
+   }
+   sort(arr,arr+n,comparator);
+
+   int maxi = arr[0].dead ;
+        for(int i=1;i<n;i++){
+            if(arr[i].dead>maxi){
+                maxi = arr[i].dead ;
+            }
+        }
+        
+        int b[maxi+1] ;
+        for(int i=0;i<=maxi;i++){
+            b[i]=-1 ;
+        }
+        
+        int count = 0;
+        int total = 0 ;
+        
+        for(int i=0;i<n;i++){
+            int temp = arr[i].dead ;
+            for(int j=temp;j>0;j--){
+                if(b[j]==-1){
+                    b[j]=arr[i].id ;
+                    count++ ;
+                    total+=arr[i].profit ;
+                    break ;
+                }
+            }
+        }
+        return total ;
+}
