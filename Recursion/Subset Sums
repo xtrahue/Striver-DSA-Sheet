@@ -1,0 +1,22 @@
+void rec(int index,vector<int>&arr,int n,vector<int>&ans,int sum){
+    if(index==n){
+        ans.push_back(sum) ;
+        //cout<<sum<<endl ;
+        return ;
+    }
+    rec(index+1,arr,n,ans,sum) ;
+    rec(index+1,arr,n,ans,sum+arr[index]) ;
+}
+
+vector<int> subsetSum(vector<int> &arr)
+{
+    // Write your code here.
+    int N = arr.size() ;
+    vector<int>ans ;
+    
+    rec(0,arr,N,ans,0) ;
+    
+    sort(ans.begin(),ans.end()) ;
+
+    return ans;
+}
