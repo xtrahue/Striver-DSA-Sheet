@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+double multiply(double mid, int n)
+{
+    double ans = mid;
+    for (int i = 0; i < n - 1; i++)
+    {
+        ans = ans * mid;
+    }
+    return ans;
+}
+
+double Nth_root(int n, int m)
+{
+    double low = 1.0;
+    double high = (double)m;
+
+    while (high - low > (1e-7))
+    {
+        double mid = (double)((low + high) / 2.0);
+
+        double x = multiply(mid, n);
+        if (x == m)
+        {
+            return mid;
+        }
+        if (x > m)
+        {
+            high = mid;
+        }
+        if (x < m)
+        {
+            low = mid;
+        }
+    }
+    return low;
+}
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+
+    double a = Nth_root(n, m);
+    cout << a << endl;
+}
