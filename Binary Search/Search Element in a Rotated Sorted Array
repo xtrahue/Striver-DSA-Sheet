@@ -1,3 +1,5 @@
+// whole ques done by me.....smirlk
+
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
