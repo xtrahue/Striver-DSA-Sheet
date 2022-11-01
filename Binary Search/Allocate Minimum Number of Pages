@@ -1,0 +1,61 @@
+bool isPossible(vector<int>&A,int B,int n,int barrier){
+    int stu =1 ;
+    int alloc=  0 ;
+    
+    for(int i=0;i<n;i++){
+        if(A[i]>barrier){
+            return 0 ;
+        }
+        else{
+            if(alloc+A[i]<=barrier){
+                alloc+=A[i] ;
+            }
+            else{
+                stu++ ;
+                alloc= A[i] ;
+            }
+        }
+    }
+    //cout<<"STudent: "<<stu<<endl ;
+    
+    if(stu>B){
+        return 0 ;
+    }
+    return 1 ;
+}
+
+int Solution::books(vector<int> &A, int B) {
+    int n1=A.size() ;
+    if(B>n1){
+        return -1 ;
+    }
+    else{
+        int p=INT_MAX ;
+        int total=0 ;
+        for(int i=0;i<n1;i++){
+            if(A[i]<p){
+                p=A[i] ;
+            }
+            total+=A[i] ;
+        }
+        //cout<<p<<" "<<total<<endl  ;
+        int left=p ;
+        int right = total ;
+        
+        int res=0 ;
+        
+        while(left<=right){
+            int mid = (left+right)>>1 ;
+            if(isPossible(A,B,n1,mid)){
+                res=mid ;
+                right=mid-1 ;
+            }
+            else{
+                left=mid+1 ;
+            }
+            
+        }
+        return res ;
+    }
+    
+}
