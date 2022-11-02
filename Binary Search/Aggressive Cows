@@ -3,7 +3,7 @@ using namespace std ;
 bool isPossible(vector<int>arr,int n,int c,int mid){
     int cow = arr[0] ;
     int count = 1;
-    for(int i=0;i<n;i++){
+    for(int i=0;i<n;i++){ //instead of the foor loop try to find the upper bound 
         if(cow+mid<=arr[i]){
             cow = arr[i] ;
             count++ ;
@@ -18,7 +18,7 @@ bool isPossible(vector<int>arr,int n,int c,int mid){
 int chessTournament(vector<int> positions , int n ,  int c){
 	// Write your code here
     sort(positions.begin(),positions.end()) ;
-    int left=0;
+    int left=0; // can also take minimum difference between two adjacent array element ;
     int right = positions[n-1]-positions[0] ;
     
     int res ;
