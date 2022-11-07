@@ -1,0 +1,32 @@
+class Solution {
+private:
+    void solve(int ind,vector<int>&candidates,vector<int>&ds,vector<vector<int>>&ans,int n,int target){
+        if(ind==n){
+            if(target==0){
+                ans.push_back(ds) ;
+            }
+            return ;
+        }
+        if(candidates[ind]<=target){
+            ds.push_back(candidates[ind]) ;
+            solve(ind+1,candidates,ds,ans,n,target-candidates[ind]) ;
+            ds.pop_back() ;
+        }
+        while(ind<n-1 && candidates[ind]==candidates[ind+1] ){
+            ind++ ;
+        }
+        solve(ind+1,candidates,ds,ans,n,target) ;
+    }
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<int>ds ;
+        vector<vector<int>>ans ;
+
+        int n = candidates.size() ;
+        sort(candidates.begin(),candidates.end()) ;
+
+        solve(0,candidates,ds,ans,n,target) ;
+
+        return ans ;       
+    }
+};
