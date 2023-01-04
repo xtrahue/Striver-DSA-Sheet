@@ -1,0 +1,56 @@
+class Solution {
+public:
+    bool Correct_pos(int row,int col,vector<string>&store,int n){
+        int dupRow=row , dupCol=col ;
+        while(row>=0 && col>=0){
+            if(store[row][col]=='Q'){
+                return false ;
+            }
+            row-- ;
+            col-- ;
+        }
+        col = dupCol;
+        row = dupRow;
+        while (col >= 0) {
+            if (store[row][col] == 'Q')
+            return false;
+            col--;
+        }
+
+        row = dupRow;
+        col = dupCol;
+        while (row < n && col >= 0) {
+            if (store[row][col] == 'Q')
+            return false;
+            row++;
+            col--;
+        }
+        return true;
+    }
+    void solve(int col,vector<vector<string>>&ans,vector<string>&store,int n){
+        if(col==n){
+            ans.push_back(store) ;
+            return ;
+        }
+        for(int row=0;row<n;row++){
+            if(Correct_pos(row,col,store,n)){
+                store[row][col] = 'Q' ;
+                solve(col+1,ans,store,n) ;
+                store[row][col]='.' ;
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>>ans ;
+        vector<string>store ;
+
+        string s(n,'.') ;
+        for(int i=0;i<n;i++){
+            store.push_back(s) ;
+        }
+
+        solve(0,ans,store,n) ;
+
+        return ans ;
+    }
+};
