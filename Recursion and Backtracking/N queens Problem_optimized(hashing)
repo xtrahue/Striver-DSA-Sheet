@@ -1,0 +1,44 @@
+//using hashing
+
+class Solution {
+public:
+    void solve(int col,vector<vector<string>>&ans,vector<string>&store,int n,vector<bool>&left,vector<bool>&leftDgnl,vector<bool>&rightDgnl){
+        if(col==n){
+            ans.push_back(store) ;
+            return ;
+        }
+        for(int row=0;row<n;row++){
+            int p=(n-1)+(row-col) ;
+            int q=row+col ;
+            if(left[row]==0 && leftDgnl[p]==0 && rightDgnl[q]==0){
+                left[row]=1 ;
+                leftDgnl[p]=1 ;
+                rightDgnl[q]=1 ;
+
+                store[row][col] = 'Q' ;
+                solve(col+1,ans,store,n,left,leftDgnl,rightDgnl) ;
+
+                store[row][col]='.' ;
+                left[row]=0 ;
+                leftDgnl[p]=0 ;
+                rightDgnl[q]=0 ;
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>>ans ;
+        vector<string>store ;
+
+        string s(n,'.') ;
+        for(int i=0;i<n;i++){
+            store.push_back(s) ;
+        }
+        vector<bool>left(n,0) ;
+        vector<bool>leftDgnl(2*n-1,0) ;
+        vector<bool>rightDgnl(2*n-1,0) ;
+
+        solve(0,ans,store,n,left,leftDgnl,rightDgnl) ;
+
+        return ans ;
+    }
+};
