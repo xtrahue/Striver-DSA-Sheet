@@ -27,3 +27,24 @@ public:
         return prev[n-1] ;
     }
 };
+
+
+
+//0(n)......................................
+
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        if(n==1 || m==1){
+            return 1;
+        }
+        int k=n+m-2 ;
+        int r=m-1 ;
+        double ans=1 ;
+        for(int i=1;i<=r;i++){
+           ans=ans*(k-r+i)/i ;
+        }
+
+        return ans ;
+    }
+};
