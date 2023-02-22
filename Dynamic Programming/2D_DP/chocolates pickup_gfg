@@ -109,3 +109,7 @@ int solveit(int i,int j1,int j2,vector<vector<int>> &grid,int n,int m){
         }
         return dp[0][0][m-1] ;
     }
+
+
+
+//dp->space optimization
