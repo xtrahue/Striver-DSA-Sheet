@@ -1,0 +1,112 @@
+//memoization
+class Solution {
+public:
+    bool solveit(vector<int>&nums,int ind,int n, int target,vector<vector<int>>&dp){
+        if(target==0){
+            return true ;
+        }
+        if(ind>=n){
+            return false ;
+        }
+        if(dp[ind][target]!=-1){
+            if(dp[ind][target]==1){
+                return true ;
+            }
+            else{
+                return false ;
+            }
+        }
+        bool notSelected=solveit(nums,ind+1,n,target,dp) ;
+        bool Select=false ;
+        if(nums[ind]<=target){
+            Select=solveit(nums,ind+1,n,target-nums[ind],dp) ;
+        }
+
+        return dp[ind][target]=(notSelected|Select) ;
+    }
+    bool canPartition(vector<int>& nums) {
+        int n=nums.size();
+        int target=0 ;
+        for(int i=0;i<n;i++){
+            target+=nums[i] ;
+        }
+        
+        if(target&1){
+            return false ;
+        }
+        target/=2;
+        //cout<<target<<endl ;
+        vector<vector<int>>dp(n,vector<int>(target+1,-1)) ;
+        return solveit(nums,0,n,target,dp) ;
+    }
+};
+
+
+
+
+
+//itreation
+bool canPartition(vector<int>& nums) {
+      int n=nums.size();
+      int target=0 ;
+      for(int i=0;i<n;i++){
+          target+=nums[i] ;
+      }
+
+      if(target&1){
+          return false ;
+      }
+      target/=2;
+      //cout<<target<<endl ;
+
+      vector<vector<bool>>dp(n,vector<bool>(target+1,0)) ;
+      dp[0][nums[0]]=1 ;
+      for(int i=0;i<n;i++){
+          dp[i][0]=1 ;
+      }
+      for(int i=1;i<n;i++){
+          for(int p=1;p<=target;p++){
+              bool notSelected = dp[i-1][p] ;
+              bool select = false ;
+              if(nums[i]<=p){
+                  select=dp[i-1][p-nums[i]] ;
+              }
+              dp[i][p]=notSelected|select ;
+          }
+      }
+      return dp[n-1][target] ;
+  }
+  
+  
+  
+ //........space optimization
+bool canPartition(vector<int>& nums) {
+  int n=nums.size();
+  int target=0 ;
+  for(int i=0;i<n;i++){
+      target+=nums[i] ;
+  }
+
+  if(target&1){
+      return false ;
+  }
+  target/=2;
+
+  vector<bool>prev(target+1) ;
+  prev[0]=1 ;
+  prev[nums[0]]=1 ;
+  for(int i=1;i<n;i++){
+      vector<bool>curr(target+1) ;
+      curr[0]=1 ;
+      for(int p=1;p<=target;p++){
+          bool notSelected = prev[p] ;
+          bool select = false ;
+          if(nums[i]<=p){
+              select=prev[p-nums[i]] ;
+          }
+          curr[p]=notSelected|select ;
+      }
+      prev=curr ;
+  }
+  return prev[target] ;
+}
