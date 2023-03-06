@@ -1,0 +1,40 @@
+//tabulization
+
+class Solution{
+  public:
+	int minDifference(int nums[], int n)  { 
+	    // Your code goes here
+	    int k=0 ;
+        for(int i=0;i<n;i++){
+            k+=nums[i];
+        }
+
+        vector<vector<bool>>dp(n,vector<bool>(k+1)) ;
+        for(int i=0;i<n;i++){
+            dp[i][0]=1 ;
+        }
+
+        dp[0][nums[0]]=1 ;
+        for(int i=1;i<n;i++){
+            for(int target=1;target<=k;target++){
+                bool notSelected=dp[i-1][target] ;
+                bool select=false ;
+                if(nums[i]<=target){
+                    select=dp[i-1][target-nums[i]] ;
+                }
+
+                dp[i][target]=select|notSelected ;
+            }
+        }
+        
+        int mini=1e6 ;
+        
+        for(int target=0;target<=k/2;target++){
+            if(dp[n-1][target]){
+                mini=min(mini,abs(k-2*target)) ;
+            }
+        }
+        
+        return mini ;
+	} 
+};
