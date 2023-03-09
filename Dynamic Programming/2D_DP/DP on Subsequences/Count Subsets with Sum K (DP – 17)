@@ -1,0 +1,101 @@
+//memoization...TC->0(n*target)      //SC ->0(n*target)+Aux stack space{0(n)}
+class Solution{
+
+	public:
+	int mod=1e9+7 ;
+	int solveit(int arr[], int n, int sum,int ind,vector<vector<int>>&dp){
+	    if(sum==0){
+	        return 1;
+	    }
+	    if(ind>=n){
+	        return 0 ;
+	    }
+	    if(dp[ind][sum]!=-1){
+	        return dp[ind][sum] ;
+	    }
+	    int notTake=solveit(arr,n,sum,ind+1,dp) ;
+	    int take=0 ;
+	    if(arr[ind]<=sum){
+	        take=solveit(arr,n,sum-arr[ind],ind+1,dp) ;
+	    }
+	     return dp[ind][sum]=(take+notTake)%mod ;
+	}
+	int perfectSum(int arr[], int n, int sum)
+	{
+        // Your code goes here
+        sort(arr,arr+n) ;
+        vector<vector<int>>dp(n,vector<int>(sum+1,-1))  ;
+        
+        
+        
+        return solveit(arr,n,sum,0,dp)%mod ;
+        
+	}
+	  
+};
+
+
+//tabulization           TC->0(n*target)      //SC ->0(n*target)
+int perfectSum(int arr[], int n, int sum)
+	{
+        // Your code goes here
+        sort(arr,arr+n) ;
+        vector<vector<int>>dp(n,vector<int>(sum+1,0))  ;
+        for(int i=0;i<n;i++){
+            dp[i][0]=1 ;
+        }
+        if(sum>=arr[0]){
+            dp[0][arr[0]]=1 ;
+        }
+        
+        for(int i=1;i<n;i++){
+            for(int target=1;target<=sum;target++){
+                int notTake=dp[i-1][target] ;
+                int take=0 ;
+        	    if(arr[i]<=target){
+        	        take=dp[i-1][target-arr[i]];
+        	    }
+        	    
+        	    dp[i][target]=(take+notTake)%mod ;
+            }
+        }
+        
+        
+        return dp[n-1][sum]%mod;
+        
+	}
+  
+  
+  //space optimized          TC->0(n*target)      //SC ->0(target)
+  int perfectSum(int arr[], int n, int sum)
+	{
+        // Your code goes here
+        sort(arr,arr+n) ;
+        vector<vector<int>>dp(n,vector<int>(sum+1,0))  ;
+        vector<int>prev(sum+1,0) ;
+        prev[0]=1 ;
+        
+        
+        if(sum>=arr[0]){
+            prev[arr[0]]=1 ;
+        }
+        
+        for(int i=1;i<n;i++){
+            vector<int>curr(sum+1,0);
+            curr[0]=1 ;
+            for(int target=1;target<=sum;target++){
+                int notTake=prev[target] ;
+                int take=0 ;
+        	    if(arr[i]<=target){
+        	        take=prev[target-arr[i]];
+        	    }
+        	    
+        	    curr[target]=(take+notTake)%mod ;
+            }
+            prev=curr ;
+        }
+        
+        
+        return prev[sum]%mod;
+        
+	}
