@@ -91,3 +91,35 @@ int knapSack(int W, int wt[], int val[], int n)
    return prev[W] ;
 
 }
+
+
+
+//without the curr vector..only using the prev
+int knapSack(int W, int wt[], int val[], int n) 
+{ 
+   // Your code here
+   vector<int>prev(W+1,0) ;
+
+   for(int weight=wt[0];weight<=W;weight++){
+       if(wt[0]<=weight){
+           prev[weight]=val[0] ;
+       }
+   }
+
+   for(int i=1;i<n;i++){
+       //vector<int>curr(W+1,0) ;
+       for(int weight=W;weight>=0;weight--){
+
+           int notTake=prev[weight] ;
+            int take=INT_MIN ;
+
+            if(wt[i]<=weight){
+                take=val[i]+prev[weight-wt[i]] ;
+            }
+
+            prev[weight]=max(take,notTake) ;
+       }
+   }
+   return prev[W] ;
+
+}
