@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MAX 1000
+
+class Stack
+{
+    int top;
+
+public:
+    int arr[MAX];
+    Stack()
+    {
+        top = -1;
+    }
+
+    void push(int x)
+    {
+        if (top >= MAX)
+        {
+            cout << "Stack Overflow";
+        }
+        else
+        {
+            arr[++top] = x;
+        }
+    }
+
+    int pop()
+    {
+        int num = arr[top];
+        top--;
+        return num;
+    }
+
+    int Top()
+    {
+        return arr[top];
+    }
+
+    bool isEmpty()
+    {
+        if (top == -1)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    int size()
+    {
+        return top + 1;
+    }
+};
+
+int main()
+{
+    Stack s;
+    int n;
+    cin >> n;
+
+    for (int i = 1; i <= n; i++)
+    {
+        int k;
+        cin >> k;
+        s.push(k);
+        cout << "Pushed: " << s.Top() << "\n";
+    }
+
+    cout << "Deleted: " << s.pop() << "\n";
+    cout << "Top: " << s.Top() << "\n";
+    cout << "Current Size: " << s.size() << "\n";
+    cout << "Empty: " << s.isEmpty() << "\n";
+}
