@@ -80,7 +80,10 @@ int main()
     string s;
     cin >> s;
 
+    //reverse the expression
     reverse(s.begin(), s.end());
+
+    //change all the '(' to ')' and vice versa
     for (int i = 0; i < s.size(); i++)
     {
         if (s[i] == '(')
@@ -93,7 +96,10 @@ int main()
         }
     }
 
+    //then get the postfix of the reversed expression (p.s. -> we will only pop the operators from stack that have greater precedence.)
     string res = inToPost(s);
+
+    //reverse the res then print
     reverse(res.begin(), res.end());
     cout << res << endl;
 }
